@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    {%if message !=""%}
+    	{{message}}
+    {% endif %}
+    <div>Login</div>
+    
+
+{% endblock %}
+
+{% block body %}
+    <form action="{{ url_for('lobby') }}" method="post" style="text-align: center;">
+    	<div>
+        	<input type="text" autocomplete="off" name="name" placeholder="Username" style="margin:5px" required>
+    	</div>
+        <div >
+        	<button  style="margin: 20px">Login</button>
+        	
+        </div>
+    
+{% endblock %}

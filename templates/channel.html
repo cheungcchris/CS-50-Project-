@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    <div>Channel: <span id="channel_name">{{channel}}</span></div>
+    <div>Logged in as: <span id="user_name">{{name}}</span></div>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="../static/index.js"></script>
+    <style type="text/css">
+        .col-6 {
+            height: 500px;
+            overflow: auto;
+            display:flex;
+            flex-direction: column-reverse;
+            border-style: solid;
+            border-width:  2px;
+        }
+        .mines{
+            background-color: lightgreen;
+        }
+        .notmines{
+            background-color: lightblue;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <hr>
+    <div class="row" style="margin-left: 0px">
+        <div class="col-6">
+            <div id="chatbox"  style="list-style: none;">
+                {%if msgs|length>0%}
+                    {%for msg in msgs%}
+                        {%if msg.user == name%}
+                            <div class="mines"  style="text-align: right; ">{{msg.msg}} | {{msg.time}} | {{msg.user}}</div>
+                        {%else%}
+                            <div class="notmines" style="text-align: left; ">{{msg.user}} | {{msg.time}} | {{msg.msg}}</div>
+                        {%endif%}
+                    {%endfor%}
+                {%endif%}
+
+            </div>
+        </div>
+        <div class="col-4">
+            <div style="text-decoration: underline;">Users in Channel:</div>
+            <div id="userslogged" class="col-4">
+            </div>
+        </div>
+    </div>
+    <form id="new_msg">
+        <input id="message" autocomplete="off" autofocus placeholder="Type Here" type="text">
+        <input id="submit" type="submit">
+    </form>
+
+    <div id="options">
+        <select id="color-change">
+            <option value="black">Black</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+        </select>
+    </div>
+    <form  action="{{ url_for('lobby') }}">
+        <button id="back_to_lobby" style="margin: 20px">Back to Lobby</button>
+    </form>
+    {% endblock %}

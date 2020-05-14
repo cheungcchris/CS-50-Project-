@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block heading %}
+    <div>Hello {{name}}</div>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="../static/lobby.js"></script>
+    <hr>
+{% endblock %}
+
+{% block body %}
+    <h3 id="subheader">Channels</h3>
+    
+    {%if channels|length>0%}
+        <ul>
+        {%for channel in channels%}
+            <li style="list-style-type: circle;"><a href="{{url_for('channel',channel=channel)}}">{{channel}}</a></li>
+        {%endfor%}
+        </ul>
+    {%else%}
+        <div style="margin-bottom: 10px">No channels yet</div>
+    {%endif%}
+    
+
+    <form id="submit_channel" action="{{ url_for('lobby') }}" method="post">
+        <input id="new_channel_name" type="text" autocomplete="off" name="add_c" placeholder="Add a Channel">
+        <input id="submit" type="submit">
+    </form>
+
+    <form action="{{ url_for('index') }}">
+        <button  style="margin: 20px">Back to Home</button>
+    </form>
+    <form action="{{ url_for('logout') }}">
+        <button  style="margin: 20px">Logout</button>
+    </form>
+    {% endblock %}
